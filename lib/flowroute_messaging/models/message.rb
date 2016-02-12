@@ -15,6 +15,11 @@ module FlowrouteMessaging
     # @return [String]
     attr_accessor :content
 
+    def initialize(to, from, content)
+        @to = to
+        @from = from
+        @content = content
+    end
     
     def method_missing (method_name)
       puts "there's no method called '#{method_name}'"
