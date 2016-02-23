@@ -11,7 +11,7 @@ The full documentation for Flowroute's v2 API is available at [flowroute.readme.
 
 ## How To Install 
 
-The SDK uses the UniRest and Jsonpickle ruby libraries, which will need to be installed before you can use the SDK. To install these packages, open a terminal session and execute the following commands
+The SDK uses the UniRest ruby library, which will need to be installed before you can use the SDK. To install this package, open a terminal session and execute the following commands
 
 	cd flowroute-messaging-ruby/
 	gem build flowroute_messaging.gemspec
