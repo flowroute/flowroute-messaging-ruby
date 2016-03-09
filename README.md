@@ -29,7 +29,7 @@ The following shows how to import the SDK and setup your API credentials.
 
 > Depending on your file system structure, you may need to explicitly state the location of the flowroute_messaging SDK. 
    
-2) Configure your API Username and Password from [Flowroute Manager](https://manage.flowroute.com/accounts/preferences/beta/).
+2) Configure your API Username and Password from [Flowroute Manager](https://manage.flowroute.com/accounts/preferences/api/).
  > If you do not have an API Key contact support@flowroute.com:
 
 	ctl = FlowrouteMessaging::MessagesController.new('YOUR_API_KEY', 'YOUR_API_SECRET_KEY')		
