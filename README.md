@@ -68,14 +68,14 @@ Importing the SDK requires that you run commands either by creating and running 
 
 4.	Replace `YOUR_API_KEY` and `YOUR_API_SECRET_KEY` with your own Access Key and Secret Key.
 
-5.	Add the following line which creates the message.
+5.	Add the following line, which creates the message.
 	
-		msg = FlowrouteMessaging::Message.new(to='TO_PHONE_NUMBER', from='FROM_PHONE_NUMBER', content='MESSAGE_CONTENT')
+		msg = FlowrouteMessaging::Message.new(to='To Phone Number, from='From Phone Number', content='Message Content')
 
 	Replace the following:
-	*	`TO_PHONE_NUMBER` with the recipient's phone number.
-	* 	`FROM_PHONE_NUMBER` with your Flowroute phone number.
-	*  `MESSAGE_CONTENT` with the message you want to send to the recipient.
+	*	`To Phone Number` with the recipient's phone number.
+	* 	`From Phone Number` with your Flowroute phone number.
+	*  `Message Content` with the message you want to send to the recipient.
 	
 	  >**NOTE:** See [`create_message`](#createmessage) for more information about parameters and allowed values.
 
@@ -129,13 +129,13 @@ The `create_message` function is used to send outbound messages from an SMS-enab
 
 `create_message` uses the following format:
 
-	msg = FlowrouteMessaging::Message.new(to='To Number', from='From Number', content='Message content.')
+	msg = FlowrouteMessaging::Message.new(to='To Phone Number', from='From Phone Number', content='Message content.')
 
 It is composed of the following variable:
 
 | Parameter | Required | Type |Usage   |                                                                             
 |-----------|----------|-------|--------------------------------------------------------|
-| *`msg`*   | True     | string| The message variable, which is composed of the `Message.new()` model, described below. The variable can have any name, and there is no limit on the length. The variable name created here must also be passed in `ctl.create_message()` and `print ctl.create_message(msg)`.<br>For this method, `msg` is used. 
+| `msg`   | True     | string| The message variable, which is composed of the `Message.new()` model, described below. The variable can have any name, and there is no limit on the length. The variable name created here must also be passed in `ctl.create_message()` and `print ctl.create_message(msg)`.<br>For this method, `msg` is used. 
 
 #####`Message.new` parameters
 
@@ -143,11 +143,11 @@ The following describe the parameters that compose the `Message.new` object:
 
 | Parameter | Required | Type| Usage                                                                            |
 |----------|----------|------|----------------------------------------------------------------------|
-| `To Number`     | True     | string |Target phone number for the message. Must use an _1NPANXXXXXX_ E.164 format. | 
-|`From Number`|True|string| Source phone number. It must be a number registered with Flowroute, must be SMS-enabled, and must use an _1NPANXXXXXX_ E.164 format.|
+| `To Phone Number`     | True     | string |Target phone number for the message. Must use an _1NPANXXXXXX_ E.164 format. | 
+|`From Phone Number`|True|string| Source phone number. It must be a number registered with Flowroute, must be SMS-enabled, and must use an _1NPANXXXXXX_ E.164 format.|
 | `Message content`| True   |string | The message itself. An unlimited number of characters can be used, but message length rules and encoding apply. See [Message Length & Concatenation](https://developer.flowroute.com/docs/message-length-concatenation) for more information. | 
 
-
+I
 #### Response messages<a name=send_rsp></a>
 
 *	If `print ctl.create_message(msg)` was not added to the script, no confirmation response is returned for a sent message. Response error messages can be returned, however.
