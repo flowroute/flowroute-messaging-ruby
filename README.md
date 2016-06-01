@@ -196,7 +196,9 @@ The `get_message_lookup` method is used to retrieve a single MDR by passing the 
 		recID = 'Record Identifier'
 		print ctl.get_message_lookup(recID))
 
-	Replace the `Record Identifier` with the identifier returned from the `create_message` method. The file should now resemble the following:
+6.	Replace the `Record Identifier` with the identifier returned from the `create_message` method. 
+
+	The file should now resemble the following:
 	
 		require 'flowroute_messaging'
 
@@ -215,6 +217,7 @@ The `get_message_lookup` method is used to retrieve a single MDR by passing the 
 		ruby getmsg.rb
 		
 	The script executes and the MDR is returned, as shown in the following example:
+	>**Note:** The following shows example formatting only. It is not intended to show the formatting of your own output.
 
 		{"data"=>
 			{"attributes"=>				{"body"=>"You're obviously not a golfer.", 				"direction"=>"outbound", 				"timestamp"=>"2016-06-01T19:21:16.396909+00:00", 				"amount_nanodollars"=>4000000, 
