@@ -1,67 +1,240 @@
 # flowroute-messaging-ruby
-## What is it?
 
-Flowroute-messaging-ruby is a ruby SDK that provides methods for sending outbound SMSs with [Flowroute's](https://www.flowroute.com) API v2. These methods can be used to accomplish the following:
+**flowroute-messaging-ruby** is a Ruby SDK that provides methods to send an outbound SMS from a Flowroute phone number and also to retrieve a Message Detail Records (MDR). These methods use **v2** (version 2) of the [Flowroute](https://www.flowroute.com) API.
 
-* Send outbound SMS
-* Retrieve MDRs (message detail records)
+These methods can be used to accomplish the following:
+
+*	Send an outbound SMS
+*	Retrieve a message detail record (MDR)
+
+
+**Note:** This SDK does not cover searching for a set of MDRs based on a date range. For searching on a date range, see [Look up a Set of Messages](https://developer.flowroute.com/docs/lookup-a-set-of-messages) on the Flowroute Developer Portal.
 
 ## Documentation 
-The full documentation for Flowroute's v2 API is available at [flowroute.readme.io](https://flowroute.readme.io/).
+The full documentation for v2 of the Flowroute API is available [here](https://developer.flowroute.com/v2.0/docs).
 
-## How To Install 
+##Before you begin
 
-The SDK uses the UniRest ruby library, which will need to be installed before you can use the SDK. To install this package, open a terminal session and execute the following commands
+The following are required before you can deploy the SDK.
 
-	cd flowroute-messaging-ruby/
-	gem build flowroute_messaging.gemspec
-	gem install flowroute_messaging-1.0.gem
+### Have your API credentials
 
-> Note: You will need to be connected to the internet in order to install the required packages
+You will need your Flowroute API credentials (Access Key and Secret Key). These can be found on the **Preferences > API Control** page of the [Flowroute](https://manage.flowroute.com/accounts/preferences/api/) portal. If you do not have API credentials, contact <mailto:support@flowroute.com>.
+
+### Know your Flowroute phone number
+
+To create and send a message, you will need your Flowroute phone number, which should be enabled for SMS. If you do not know your phone number, or if you need to verify whether or not it is enabled for SMS, you can find it on the [DIDs](https://manage.flowroute.com/accounts/dids/) page of the Flowroute portal.
+
+## Install the required libraries
+
+> **Note:** You must be connected to the Internet in order to install the required libraries.
+
+The SDK uses the UniRest Ruby library, which must be installed before you can use the SDK. 
+
+1. Open a terminal session. 
+
+2. If needed, create a parent directory folder where you want to install the SDK.
+ 
+3. Go to the newly created folder, and run the following:
+
+ 	`git clone https://github.com/flowroute/flowroute-messaging-ruby.git`
+ 	
+ 	The `git clone` command clones the **flowroute-messaging-ruby** repository as a sub directory within the parent folder.echo 
+ 	
+4.	Change directories to the newly created **flowroute-messaging-ruby** directory.
+
+5.	Run the following:
+
+		gem build flowroute_messaging.gemspec
+		gem install flowroute_messaging-1.0.gem
+
+6.	Import the SDK.
   
-## How To Get Setup
+## Create a script to import the SDK and send a message
 
-The following shows how to import the SDK and setup your API credentials.
+Importing the SDK requires that you run commands either by creating and running a script or through the shell. The following instructions describe importing the SDK and running the `messages_controller` by creating and running a script.
 
-1) Import the SDK module:
+>**Note:** The following steps describe creating a new Ruby script. However, a demo script, **demo_send.rb**, was installed when the the libraries installed. This file contains the required lines that only need to be modified with your credentials and details for the message to send. If you want to use this script, modify the fields as described below, then run the script from the command line.  
 
-	require 'flowroute_messaging/'
+1.	Using a code text editor — for example, *Sublime Text* — create a new file.
 
-> Depending on your file system structure, you may need to explicitly state the location of the flowroute_messaging SDK. 
-   
-2) Configure your API Username and Password from [Flowroute Manager](https://manage.flowroute.com/accounts/preferences/api/).
- > If you do not have an API Key contact support@flowroute.com:
+2.	Add the following line to the top of the file:
 
-	ctl = FlowrouteMessaging::MessagesController.new('YOUR_API_KEY', 'YOUR_API_SECRET_KEY')		
+		require 'flowroute_messaging'
+		
+3.	Next, add the lines to instantiate the controller:
 
-## List of Methods and Example Uses
+		ctl = FlowrouteMessaging::MessagesController.new('YOUR_API_KEY', 'YOUR_API_SECRET_KEY')   
 
-### messages_controller
+4.	Replace `YOUR_API_KEY` and `YOUR_API_SECRET_KEY` with your own Access Key and Secret Key.
 
-The APIController contains the methods neccesary to both send outbuond SMSs and to retrieve MDRs.
-
-#### create_message message
-
-The create_message method is used to send outbound messages from SMS enabled Flowroute numbers.
-
-| Parameter | Required | Usage                                                                                |
-|-----------|----------|--------------------------------------------------------------------------------------|
-| message   | True     | The message parameter that includes your To Number, From Number, and Message Content |
-
-##### Example Usage
-
-	msg = FlowrouteMessaging::Message.new(to='19515555555', from='12065555555', content='Obviously you're not a golfer.')
-	ctl.create_message(msg)
+5.	Add the following line which creates the message.
 	
-#### get\_message\_lookup record_id
+		msg = FlowrouteMessaging::Message.new(to='TO_PHONE_NUMBER', from='FROM_PHONE_NUMBER', content='MESSAGE_CONTENT')
 
-The get\_message\_lookup method is used to retrieve a MDR (message detail record).
+	Replace the following:
+	*	`TO_PHONE_NUMBER` with the recipient's phone number.
+	* 	`FROM_PHONE_NUMBER` with your Flowroute phone number.
+	*  `MESSAGE_CONTENT` with the message you want to send to the recipient.
+	
+	  >**NOTE:** See [`create_message`](#createmessage) for more information about parameters and allowed values.
 
-| Parameter | Required | Usage                                                 |
+6.	Next add the following line to create the message:
+
+		ctl.create_message(msg)
+
+7.	If you want the script to return the message identifier on sending, add the following optional line:
+
+		print ctl.create_message(msg) 
+	
+	>**Note:** The message identifier is required when running the [`get_message_lookup`](#getmessage) method.
+
+	Your file should now resemble the following:
+	
+		#Import the Flowroute Messaging SDK (Ruby)
+		require 'flowroute_messaging'
+
+		#Instantiate the controller
+		ctl = FlowrouteMessaging::MessagesController.new('12345678', 'm8axLA45yds7123488aOQ7BshaADg6vr')
+
+		#Create the message object
+		msg = FlowrouteMessaging::Message.new(to='15305557784', from='18444205700', content='You're obviously not a golfer.')
+
+		#Send the message
+		ctl.create_message(msg)
+
+		#Print the message identifier
+		print ctl.create_message(msg)	
+
+8.	Save the file in the top-level **flowroute-messaging-ruby** directory with a **.rb** extension. For this example, the file is named **createmsg.rb**.
+
+9.	From the **flowroute-messaging-ruby** directory in a terminal window, run the following to execute the script:
+
+		ruby createmsg.rb
+		
+	The script executes, and the message is sent. See [Response messages](#send_rsp) for possible response messages.
+
+## messages_controller
+
+The `messages_controller` contains the methods required to send outbound SMS texts and to retrieve MDRs:
+
+*	[`create_message`](#createmessage)— used to send outbound messages from an SMS-enabled Flowroute number.
+* 	[`get_message_lookup`](#getmessage)— used to retrieve the MDR for a specified message.
+
+### <font color="blue">`create_message`</font><a name=createmessage></a>
+
+The `create_message` function is used to send outbound messages from an SMS-enabled Flowroute number. 
+
+####Usage
+
+`create_message` uses the following format:
+
+	msg = FlowrouteMessaging::Message.new(to='To Number', from='From Number', content='Message content.')
+
+It is composed of the following variable:
+
+| Parameter | Required | Type |Usage   |                                                                             
+|-----------|----------|-------|--------------------------------------------------------|
+| *`msg`*   | True     | string| The message variable, which is composed of the `Message.new()` model, described below. The variable can have any name, and there is no limit on the length. The variable name created here must also be passed in `ctl.create_message()` and `print ctl.create_message(msg)`.<br>For this method, `msg` is used. 
+
+#####`Message.new` parameters
+
+The following describe the parameters that compose the `Message.new` object:
+
+| Parameter | Required | Type| Usage                                                                            |
+|----------|----------|------|----------------------------------------------------------------------|
+| `To Number`     | True     | string |Target phone number for the message. Must use an _1NPANXXXXXX_ E.164 format. | 
+|`From Number`|True|string| Source phone number. It must be a number registered with Flowroute, must be SMS-enabled, and must use an _1NPANXXXXXX_ E.164 format.|
+| `Message content`| True   |string | The message itself. An unlimited number of characters can be used, but message length rules and encoding apply. See [Message Length & Concatenation](https://developer.flowroute.com/docs/message-length-concatenation) for more information. | 
+
+
+#### Response messages<a name=send_rsp></a>
+
+*	If `print ctl.create_message(msg)` was not added to the script, no confirmation response is returned for a sent message. Response error messages can be returned, however.
+ 
+* If `print ctl.create_message(msg)` was added to the script, a successful response returns the message identifier, as shown in the following example:
+
+		{"data": {"id": "mdr1-fab29a740129404a8ca794efc1359e12'}}
+
+*	If an error is encountered, an error code and message are returned. The following table describes the possible `create_message` error codes and messages that can be returned:
+
+	| Error code | Message | Description                                                 |
+	|-------|----------|-------------------------------------------------------|
+	|`401`   |UNAUTHORIZED|The API credentials are incorrect.
+	|`403`  | FORBIDDEN  | The `from` number is not authorized.|
+	
+#### <font color="blue">`get_message_lookup`</font> <a name="getmessage"></a>
+
+The `get_message_lookup` method is used to retrieve a single MDR by passing the record identifier of a previously sent message.
+
+#####Usage
+
+		recID = 'Record Identifier'
+		print ctl.get_message_lookup(recID))
+
+| Parameter | Required | Type |Usage                                                 |
+|-----------|----------|-------|------------------------------------------------|
+|`recID`   | True |string  | Variable that identifies the `Record Identifier`. This variable can use any alphanumeric character and can be of any length. For this example, `recID` is used.
+| `Record Identifier`      | True| string     | The identifier of an existing record to retrieve. The value should include the`mdr1-`prefix. |
+
+**To run the `get_message_lookup` method:**
+
+1.	Using a code text editor — for example, *Sublime Text* — create a new file.
+
+2.	Add the following line to the top of the file to require `flowroute_messaging`:
+
+		require 'flowroute_messaging'
+		
+3.	Add the following lines to instantiate the controller:
+
+		ctl = FlowrouteMessaging::MessagesController.new('YOUR_API_KEY', 'YOUR_API_SECRET_KEY')   
+
+4.	Replace `YOUR_API_KEY` and `YOUR_API_SECRET_KEY` with your own Access Key and Secret Key.
+
+5.	Add the following to retrieve the MDR:
+	
+		recID = 'Record Identifier'
+		print ctl.get_message_lookup(recID))
+
+	Replace the `Record Identifier` with the identifier returned from the `create_message` method. The file should now resemble the following:
+	
+		require 'flowroute_messaging'
+
+		#Instantiate the controller
+		ctl = FlowrouteMessaging::MessagesController.new('12345678', 'm8axLA45yds7123488aOQ7BshaADg6vr')
+
+		#Return the MDR
+		recID = 'mdr1-fab29a740129404a8ca794efc1359e12'
+		print ctl.get_message_lookup(recID)
+
+
+7.	Save the file in the top-level **flowroute-messaging-ruby** directory with a **.rb** extension. For this example, the file is named **getmsg.rb**.
+
+9.	From the **flowroute-messaging-ruby** directory in a terminal window, run the following to execute the script:
+
+		ruby getmsg.rb
+		
+	The script executes and the MDR is returned, as shown in the following example:
+
+		{"data"=>
+			{"attributes"=>				{"body"=>"You're obviously not a golfer.", 				"direction"=>"outbound", 				"timestamp"=>"2016-06-01T19:21:16.396909+00:00", 				"amount_nanodollars"=>4000000, 
+				"from"=>"18444205700", 				"message_encoding"=>0, 				"has_mms"=>false, 				"to"=>"15305557784",				"amount_display"=>"$0.0040", 				"callback_url"=>nil, 				"message_type"=>"long-code".
+ 				}, 			"type"=>"message", 			"id"=>"mdr1-fab29a740129404a8ca794efc1359e12"
+			}		}
+		
+######Response message field descriptions
+ Parameter | Description                                                 |
 |-----------|----------|-------------------------------------------------------|
-| recordId  | True     | The ID for the record that you would like to retrieve |
+| `data`  | Object composed of `attributes`, `type`, and `id`. |
+|`attributes`    |Object composed of the following:
+|  | <ul><li>`body`: The content of the message.<li>`direction`:  The direction of the message. For a sent message, this is `outbound`. For a received message this is`inbound`.<li>`timestamp`: Date and time, to the second, on which the message was sent. This field displays UTC time using an ISO 8601 format.<li>`amount_nanodollars`: The cost of the message in nanodollars. Because Flowroute uses eight decimal points of precision, the amount in nanodollars is the USD`amount_display` value multipled by 100,000,000 (one hundred million) for a corresponding whole number. <li>`from`: The Flowroute SMS-enabled number from which the message was sent.<li>`message_encoding`: Indicates the encoding type, which will be either `0` (UTF-8) or `8` (UCS-2). See [Message Length & Concatenation](https://developer.flowroute.com/docs/message-length-concatenation) for more information. <li>`has_mms`: Boolean indicating whether or not the message includes a multimedia file. `true` indicates yes, while `false` indicates no. Currently, MMS is not supported; therefore, the default value for this field will always be `false`.  <li>`to`: The phone number to which the message was sent. <li>`amount_display`: The total cost of the message in USD. If a message was broken into multiple pieces due to concatenation, this amount will be the total amount for all message pieces. This field does _not_ display out to eight decimal points. See _Message cost_ in [Message Length & Concatenation](https://developer.flowroute.com/docs/message-length-concatenation) for more information. <li>`callback_URL`The callback URL defined for the Flowroute number on the [Preferences > API Control](https://manage.flowroute.com/accounts/preferences/api/) page, the URL appears in this field; otherwise, the value is `nil`.  <li>`message_type`: Indicates the type of message, either `long-code` or `toll-free`. If the message was sent to or received from another phone number, this field displays `long-code`; if sent to or received from a toll-free number, this field displays `toll-free`. </li></ul>| 
+|`type`| Defines what the object is. Because SMS is the only supported object type, this field will always display `message`.|
+|`id` | The unique record identifier of a sent message, generated from a successful `create_message`.|                      
 
-##### Example Usage
+#####Error response
+The following error can be returned:
 
-	recID = 'mdr1-aab41ddde40742e1bea286116a320agf'
-	print ctl.get_message_lookup(recID)
+| Error code | Message | Description                                                 |
+|-------|----------|-------------------------------------------------------|
+|No code number  |Response Not OK|This error is most commonly returned when the `id` passed in the method is incorrect.|
+	
