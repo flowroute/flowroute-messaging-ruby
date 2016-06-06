@@ -75,7 +75,7 @@ Importing the SDK requires that you run commands either by creating and running 
 	Replace the following:
 	*	`To Phone Number` with the recipient's phone number.
 	* 	`From Phone Number` with your Flowroute phone number.
-	*  `Message Content` with the message you want to send to the recipient.
+	*   `Message Content` with the message you want to send to the recipient.
 	
 	  >**NOTE:** See [`create_message`](#createmessage) for more information about parameters and allowed values.
 
@@ -154,7 +154,9 @@ The following describe the parameters that compose the `Message.new` object:
 * If `print ctl.create_message(msg)` was added to the script, a successful response returns the message identifier, as shown in the following example:
 
 		{"data": {"id": "mdr1-fab29a740129404a8ca794efc1359e12'}}
-
+	
+	>**Note:** See [`get_message_lookup`](#getmessage) for information on using the identifier to retrieve an MDR.
+	
 *	If an error is encountered, an error code and message are returned. The following table describes the possible `create_message` error codes and messages that can be returned:
 
 	| Error code | Message | Description                                                 |
@@ -162,7 +164,7 @@ The following describe the parameters that compose the `Message.new` object:
 	|`401`   |UNAUTHORIZED|The API credentials are incorrect.
 	|`403`  | FORBIDDEN  | The `from` number is not authorized.|
 	
-#### <font color="blue">`get_message_lookup`</font> <a name="getmessage"></a>
+#### `get_message_lookup`<a name="getmessage"></a>
 
 The `get_message_lookup` method is used to retrieve a single MDR by passing the record identifier of a previously sent message. Before running the method you must have retrieved a message ID using the `create_message` method.
 
