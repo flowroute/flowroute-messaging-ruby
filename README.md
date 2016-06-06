@@ -89,7 +89,7 @@ Importing the SDK requires that you run commands either by creating and running 
 	
 	>**Note:** The message identifier is required when running the [`get_message_lookup`](#getmessage) method.
 
-	Your file should now resemble the following:
+	The following shows an example file:
 	
 		#Import the Flowroute Messaging SDK (Ruby)
 		require 'flowroute_messaging'
@@ -121,7 +121,7 @@ The `messages_controller` contains the methods required to send outbound SMS tex
 *	[`create_message`](#createmessage)— used to send outbound messages from an SMS-enabled Flowroute number.
 * 	[`get_message_lookup`](#getmessage)— used to retrieve the MDR for a specified message.
 
-### <font color="blue">`create_message`</font><a name=createmessage></a>
+### `create_message`<a name=createmessage></a>
 
 The `create_message` function is used to send outbound messages from an SMS-enabled Flowroute number. 
 
@@ -147,7 +147,6 @@ The following describe the parameters that compose the `Message.new` object:
 |`From Phone Number`|True|string| Source phone number. It must be a number registered with Flowroute, must be SMS-enabled, and must use an _1NPANXXXXXX_ E.164 format.|
 | `Message content`| True   |string | The message itself. An unlimited number of characters can be used, but message length rules and encoding apply. See [Message Length & Concatenation](https://developer.flowroute.com/docs/message-length-concatenation) for more information. | 
 
-I
 #### Response messages<a name=send_rsp></a>
 
 *	If `print ctl.create_message(msg)` was not added to the script, no confirmation response is returned for a sent message. Response error messages can be returned, however.
@@ -165,17 +164,21 @@ I
 	
 #### <font color="blue">`get_message_lookup`</font> <a name="getmessage"></a>
 
-The `get_message_lookup` method is used to retrieve a single MDR by passing the record identifier of a previously sent message.
+The `get_message_lookup` method is used to retrieve a single MDR by passing the record identifier of a previously sent message. Before running the method you must have retrieved a message ID using the `create_message` method.
 
 #####Usage
+
+The `get_method_lookup` method is formatted as follows:
 
 		recID = 'Record Identifier'
 		print ctl.get_message_lookup(recID))
 
+It supports the following parameters:
+
 | Parameter | Required | Type |Usage                                                 |
 |-----------|----------|-------|------------------------------------------------|
 |`recID`   | True |string  | Variable that identifies the `Record Identifier`. This variable can use any alphanumeric character and can be of any length. For this example, `recID` is used.
-| `Record Identifier`      | True| string     | The identifier of an existing record to retrieve. The value should include the`mdr1-`prefix. |
+| `Record Identifier`      | True| string     | The identifier of an existing record to retrieve, from the `create_message` method. The value should include the`mdr1-`prefix. |
 
 **To run the `get_message_lookup` method:**
 
@@ -198,7 +201,7 @@ The `get_message_lookup` method is used to retrieve a single MDR by passing the 
 
 6.	Replace the `Record Identifier` with the identifier returned from the `create_message` method. 
 
-	The file should now resemble the following:
+	The following shows an example:
 	
 		require 'flowroute_messaging'
 
@@ -216,7 +219,8 @@ The `get_message_lookup` method is used to retrieve a single MDR by passing the 
 
 		ruby getmsg.rb
 		
-	The script executes and the MDR is returned, as shown in the following example:
+	The script executes, returning the MDR as shown in the following example:
+	
 	>**Note:** The following shows example formatting only. It is not intended to show the formatting of your own output.
 
 		{"data"=>
@@ -226,8 +230,11 @@ The `get_message_lookup` method is used to retrieve a single MDR by passing the 
 			}		}
 		
 ######Response message field descriptions
- Parameter | Description                                                 |
-|-----------|----------|-------------------------------------------------------|
+
+The following information is returned in the response message:
+
+|Parameter | Description                                                 |
+|-----------|-------------------------------------------------------------|
 | `data`  | Object composed of `attributes`, `type`, and `id`. |
 |`attributes`    |Object composed of the following:
 |  | <ul><li>`body`: The content of the message.<li>`direction`:  The direction of the message. For a sent message, this is `outbound`. For a received message this is`inbound`.<li>`timestamp`: Date and time, to the second, on which the message was sent. This field displays UTC time using an ISO 8601 format.<li>`amount_nanodollars`: The cost of the message in nanodollars. Because Flowroute uses eight decimal points of precision, the amount in nanodollars is the USD`amount_display` value multipled by 100,000,000 (one hundred million) for a corresponding whole number. <li>`from`: The Flowroute SMS-enabled number from which the message was sent.<li>`message_encoding`: Indicates the encoding type, which will be either `0` (UTF-8) or `8` (UCS-2). See [Message Length & Concatenation](https://developer.flowroute.com/docs/message-length-concatenation) for more information. <li>`has_mms`: Boolean indicating whether or not the message includes a multimedia file. `true` indicates yes, while `false` indicates no. Currently, MMS is not supported; therefore, the default value for this field will always be `false`.  <li>`to`: The phone number to which the message was sent. <li>`amount_display`: The total cost of the message in USD. If a message was broken into multiple pieces due to concatenation, this amount will be the total amount for all message pieces. This field does _not_ display out to eight decimal points. See _Message cost_ in [Message Length & Concatenation](https://developer.flowroute.com/docs/message-length-concatenation) for more information. <li>`callback_URL`The callback URL defined for the Flowroute number on the [Preferences > API Control](https://manage.flowroute.com/accounts/preferences/api/) page, the URL appears in this field; otherwise, the value is `nil`.  <li>`message_type`: Indicates the type of message, either `long-code` or `toll-free`. If the message was sent to or received from another phone number, this field displays `long-code`; if sent to or received from a toll-free number, this field displays `toll-free`. </li></ul>| 
