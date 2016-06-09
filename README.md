@@ -39,7 +39,7 @@ The SDK uses the UniRest Ruby library, which must be installed before you can us
 
  	`git clone https://github.com/flowroute/flowroute-messaging-ruby.git`
  	
- 	The `git clone` command clones the **flowroute-messaging-ruby** repository as a sub directory within the parent folder.echo 
+ 	The `git clone` command clones the **flowroute-messaging-ruby** repository as a sub directory within the parent folder.
  	
 4.	Change directories to the newly created **flowroute-messaging-ruby** directory.
 
