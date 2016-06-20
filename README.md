@@ -52,8 +52,9 @@ The SDK uses the UniRest Ruby library, which must be installed before you can us
 		gem install flowroute_messaging-1.0.gem
 
 6.	Import the SDK.
-  
-## Create a script to import the SDK and send a message
+
+ 
+## Create a script to import the SDK
 
 Importing the SDK requires that you run commands either by creating and running a script or through the shell. The following instructions describe importing the SDK and running the `messages_controller` by creating and running a script.
 
@@ -61,19 +62,19 @@ Importing the SDK requires that you run commands either by creating and running 
 
 1.	Using a code text editor — for example, *Sublime Text* — create a new file.
 
-2.	Add the following line to the top of the file:
+2.	Add the following Ruby `require` line at the top of the file:
 
-		#Require Flowroute Messagine
+		#Require Flowroute Messaging
 		require 'flowroute_messaging'
 		
-3.	Next, add the lines to instantiate the controller:
+3.	Next, add the lines to pass your API credentials to the Controller:
 
 		#Pass your API credentials
 		ctl = FlowrouteMessaging::MessagesController.new('YOUR_API_KEY', 'YOUR_API_SECRET_KEY')   
 
 4.	Replace `YOUR_API_KEY` and `YOUR_API_SECRET_KEY` with your own Access Key and Secret Key.
 
-5.	Add the [message_controller](#controller) methods.
+5.	Add the [MessagesController](#controller) methods.
 
 6.	Save the file in the top-level **flowroute-messaging-ruby** directory with a **.rb** extension. For this example, the file is named **createmsg.rb**.
 
@@ -81,25 +82,28 @@ Importing the SDK requires that you run commands either by creating and running 
 
 		ruby createmsg.rb
 		
-###Example Ruby file
+### Example Ruby file
 	
 The following shows an example file, **createmsg.rb**, that contains all Controller methods:
 	
-		#Import the Flowroute Messaging SDK (Ruby)
-		require 'flowroute_messaging'
+	#Require Flowroute Messaging
+	require 'flowroute_messaging'
 
-		#Instantiate the controller
-		ctl = FlowrouteMessaging::MessagesController.new('12345678', 'm8axLA45yds7123488aOQ7BshaADg6vr')
+	#Pass your API credentials
+	ctl = FlowrouteMessaging::MessagesController.new('12345678', 'm8axLA45yds7123488aOQ7BshaADg6vr')
 
-		#Create, send and print the message
-		msg = FlowrouteMessaging::Message.new(to='15305557784', from='18444205700', content='You're obviously not a golfer.')
-		ctl.create_message(msg)
-		print ctl.create_message(msg)	
+	#Create, send and print the message
+	msg = FlowrouteMessaging::Message.new(to='To Phone Number', from='From Phone Number', content='Message content')
+	ctl.create_message(msg)
+	print ctl.create_message(msg)	
+		
+	#Get the MDR
+	recID = 'recordIdentifier'
+	print ctl.get_message_lookup(recID))
+		
+## MessagesController<a name=controller></a>
 
-
-## messages_controller<a name=controller></a>
-
-The `messages_controller` contains the methods required to send outbound SMS texts and to retrieve MDRs:
+The `MessagesController` contains the methods required to send outbound SMS texts and to retrieve MDRs:
 
 *	[`create_message`](#createmessage)— used to send outbound messages from an SMS-enabled Flowroute number.
 * 	[`get_message_lookup`](#getmessage)— used to retrieve the MDR for a specified message.
