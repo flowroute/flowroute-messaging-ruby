@@ -125,11 +125,11 @@ The method is composed of the following variables and parameters:
 
 | Parameter | Required | Type |Usage   |                                                                             
 |-----------|----------|-------|--------------------------------------------------------|
-| `msg`   | True     | string| The variable n, which is composed of the `Message.new()` model, described below. The variable can have any name, and there is no limit on the length. The variable name created here must also be passed in `ctl.create_message()` and `print ctl.create_message(msg)`.<br>For this method, `msg` is used. 
+| `msg`   | True     | string| The variable name, which is composed of the `Message.new()` model, described below. The variable name can be of any length. The variable name created here must also be passed in `ctl.create_message()` and `print ctl.create_message(msg)`.<br>For this method, `msg` is used. 
 
-#####`Message.new` parameters
+#####`Message.new*()` parameters
 
-The following describe the parameters that compose the `Message.new` object:
+The following describe the parameters that compose the `Message.new()` object:
 
 | Parameter | Required | Type| Usage                |                                                       
 |----------|----------|------|----------------------------------------------------------------------|
@@ -163,7 +163,9 @@ One of the following will occur:
 | Error code | Message | Description                                                 |
 |-------|----------|-------------------------------------------------------|
 |`401`   |UNAUTHORIZED|The API credentials are incorrect.
-|`403`  | FORBIDDEN  | The `from` number is not authorized.|
+|`403`  | FORBIDDEN  | The `from` phone number is not authorized.|
+|`500`| HTTP Response Not OK | The `to` phone number is not an 11-digit number using an E.164 format.|
+
 	
 ### `get_message_lookup`<a name="getmessage"></a>
 
@@ -193,7 +195,7 @@ It supports the following parameters:
 
 #### Example response		
 
-On successfully invoking the method, the MDR is returned as shown in the following example:
+On successfully invoking the method, the MDR is returned as shown in the following example. If an error is encountered while invoking the message, an [error response message](#errorgetmsg) is returned.
 	
 >**Note:** The following shows example formatting only. It is not intended to show the formatting of your own output.
 
@@ -201,9 +203,7 @@ On successfully invoking the method, the MDR is returned as shown in the followi
 			{"attributes"=>				{"body"=>"You're obviously not a golfer.", 				"direction"=>"outbound", 				"timestamp"=>"2016-06-01T19:21:16.396909+00:00", 				"amount_nanodollars"=>4000000, 
 				"from"=>"18444205700", 				"message_encoding"=>0, 				"has_mms"=>false, 				"to"=>"15305557784",				"amount_display"=>"$0.0040", 				"callback_url"=>nil, 				"message_type"=>"long-code".
  				}, 			"type"=>"message", 			"id"=>"mdr1-fab29a740129404a8ca794efc1359e12"
-			}		}
-If an error is encountered while invoking the message, an [error response message](#errorgetmsg) is returned.
-		
+			}		}	
 ###### Response message field descriptions
 
 The following information is returned in the response message:
@@ -217,9 +217,8 @@ The following information is returned in the response message:
 |`id` | The unique record identifier of a sent message, generated from a successful `create_message`.|                      
 
 #####Error response<a name=errorgetmsg></a>
-The following error can be returned:
 
 | Error code | Message | Description                                                 |
 |-------|----------|-------------------------------------------------------|
-|No code number  |Response Not OK|This error is most commonly returned when the `id` passed in the method is incorrect.|
+|500 |Response Not OK|This error is most commonly returned when the `id` passed in the method is incorrect.|
 	
