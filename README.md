@@ -127,7 +127,7 @@ The method is composed of the following variables and parameters:
 |-----------|----------|-------|--------------------------------------------------------|
 | `msg`   | True     | string| The variable name, which is composed of the `Message.new()` model, described below. The variable name can be of any length. The variable name created here must also be passed in `ctl.create_message()` and `print ctl.create_message(msg)`.<br>For this method, `msg` is used. 
 
-#####`Message.new*()` parameters
+#####`Message.new()` parameters
 
 The following describe the parameters that compose the `Message.new()` object:
 
