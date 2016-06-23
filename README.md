@@ -92,7 +92,7 @@ The following shows an example file, **createmsg.rb**, that contains all Control
 	#Pass your API credentials
 	ctl = FlowrouteMessaging::MessagesController.new('12345678', 'm8axLA45yds7123488aOQ7BshaADg6vr')
 
-	#Create, send and print the message
+	#Create and send the message
 	msg = FlowrouteMessaging::Message.new(to='To Phone Number', from='From Phone Number', content='Message content')
 	ctl.create_message(msg)
 	print ctl.create_message(msg)	
@@ -116,7 +116,7 @@ The `create_message` function is used to send outbound messages from an SMS-enab
 
 Add the following lines to your Ruby file to create the message, send the message, and then print the message record identifier to the screen:
 
-	#Create, send, and print a message
+	#Create and send the message
 	msg = FlowrouteMessaging::Message.new(to='To Phone Number', from='From Phone Number', content='Message content.')
 	ctl.create_message(msg)
 	print ctl.create_message(msg)
@@ -139,7 +139,7 @@ The following describe the parameters that compose the `Message.new()` object:
 
 #### Example usage
 
-	#Create, send, and print a message
+	#Create and send the message
 	msg = FlowrouteMessaging::Message.new(to='15305557784', from='18444205700', content='You're obviously not a golfer.')
 	ctl.create_message(msg)
 	print ctl.create_message(msg)
