@@ -98,7 +98,7 @@ The following shows an example file, **createmsg.rb**, that contains all Control
 		
 	#Get the MDR
 	recID = 'recordIdentifier'
-	print ctl.get_message_lookup(recID))
+	print ctl.get_message_lookup(recID)
 		
 ## MessagesController<a name=controller></a>
 
@@ -176,7 +176,7 @@ Add the following lines to your Ruby file:
 
 	#Get the MDR
 	recID = 'recordIdentifier'
-	print ctl.get_message_lookup(recID))
+	print ctl.get_message_lookup(recID)
 
 It supports the following parameters:
 
