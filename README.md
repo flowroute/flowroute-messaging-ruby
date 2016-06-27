@@ -189,7 +189,7 @@ It supports the following parameters:
 
 	#Get the MDR
 	recID = 'fab29a740129404a8ca794efc1359e12'
-	print ctl.get_message_lookup(recID))
+	print ctl.get_message_lookup(recID)
 
 
 #### Example response		
