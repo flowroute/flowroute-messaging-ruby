@@ -94,7 +94,6 @@ The following shows an example file, **createmsg.rb**, that contains all Control
 
 	#Create and send the message
 	msg = FlowrouteMessaging::Message.new(to='To Phone Number', from='From Phone Number', content='Message content')
-	ctl.create_message(msg)
 	print ctl.create_message(msg)	
 		
 	#Get the MDR
