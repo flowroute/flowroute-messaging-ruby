@@ -32,7 +32,7 @@ Steps in this SDK describe creating one or more script files that allow you to e
 
 > **Note:** You must be connected to the Internet in order to install the required libraries.
 
-The SDK uses the UniRest Ruby library, which must be installed before you can use the SDK. 
+The SDK uses the UniRest Ruby library, which must be [installed](http://unirest.io/ruby.html) before you can use the SDK. 
 
 1. Open a terminal session. 
 
